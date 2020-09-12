@@ -45,7 +45,12 @@ export class AuthenticationCodeManager {
   }
 
   async deleteAuthenticationCode(authentication_code: string) {
-    /* TODO: Implement this */
+    const key = this.keyOfAuthenticationCode(authentication_code);
+    const result = await promisify<number | undefined>(callback =>
+      this.redisClient!.del(key, callback)
+    )();
+    if (result !== 1) throw new DeleteAuthenticationCodeFailedError();
+    return true;
   }
 
   async spawnRefreshToken(trackerId: string) {
@@ -85,6 +90,10 @@ export class AuthenticationCodeManager {
       crypto.randomBytes(32, callback)
     )().then(buffer => buffer.toString('hex'));
   }
+}
+
+export class DeleteAuthenticationCodeFailedError extends Error {
+  message = 'Failed to delete authentication code';
 }
 
 export default new AuthenticationCodeManager();

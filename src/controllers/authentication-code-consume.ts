@@ -1,15 +1,14 @@
 import {Request} from 'express';
 import Managers from '../utility/json-web-token-manager';
-import AuthenticateManager from '../authentication-code-manager';
+import AuthenticateManager, {
+  DeleteAuthenticationCodeFailedError,
+} from '../authentication-code-manager';
 import {
   createFailureHttpResponse,
   createSuccessHttpResponse,
 } from '../utility/HttpResponse';
 import {appLogger} from '../loggers';
-import {
-  JwtMobileAccessToken,
-  createJwtMobileAccessToken,
-} from '../utility/JsonWebToken';
+import {createJwtMobileAccessToken} from '../utility/JsonWebToken';
 
 export default async function handleHttpRequest(request: Request) {
   try {
@@ -41,7 +40,16 @@ async function handleHttpRequest_2(request: Request) {
   const {trackerId, expiry} = target;
 
   /* Consume the code */
-  AuthenticateManager.deleteAuthenticationCode(authentication_code);
+  try {
+    AuthenticateManager.deleteAuthenticationCode(authentication_code);
+  } catch (e) {
+    if (e instanceof DeleteAuthenticationCodeFailedError) {
+      const message = `Failed to remove authentication code: ${authentication_code}`;
+      appLogger.error(message);
+    } else {
+      throw e;
+    }
+  }
 
   /* Test if the code already timeout, 60 second for clock skew. */
   if (Math.floor(Date.now() / 1000) > expiry + 60)
