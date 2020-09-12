@@ -78,7 +78,7 @@ export class AuthenticationCodeManager {
   }
 
   keyOfTrackerRefreshToken(trackerId: string) {
-    return `/trackerId_refresh_token/${trackerId}`;
+    return `/tracker_refresh_token/${trackerId}`;
   }
 
   keyOfAuthenticationCode(token: string) {
