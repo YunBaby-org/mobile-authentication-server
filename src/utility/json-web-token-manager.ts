@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 import fs from 'fs';
 import {
   isJwtRestfulCredentials,
@@ -99,6 +100,7 @@ class Managers {
     return this.MobileAuthenticationServer.sign(accessToken, {
       expiresIn: 2 * 60,
       subject: trackerId,
+      jwtid: crypto.randomBytes(8).toString('hex'),
     });
   }
 
