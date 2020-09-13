@@ -2,6 +2,8 @@
 
 The authentication for mobile device
 
+Swagger Doc: https://app.swaggerhub.com/apis-docs/garyparrot/Mobile-Authentication-Server/1.0.0
+
 ## Use case
 
 1. Distribute authentication code for frontend application.
