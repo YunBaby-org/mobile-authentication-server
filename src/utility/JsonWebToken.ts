@@ -7,15 +7,10 @@ export function isJwtRestfulCredentials(obj: object) {
   return typeof asObject.userid === 'string';
 }
 
-type RabbitPermission = {name: string; rwc: [boolean, boolean, boolean]};
-
 export interface JwtMobileAccessToken {
   trackerId: string;
   permission: {
     vhost: [string];
-    exchange?: [RabbitPermission];
-    queue?: [RabbitPermission];
-    topic?: [RabbitPermission];
   };
 }
 
@@ -24,19 +19,7 @@ export function createJwtMobileAccessToken(
 ): JwtMobileAccessToken {
   return {
     trackerId: trackerId,
-    permission: {vhost: ['tracker/moble']},
-  };
-}
-
-export function RabbitPermission(
-  name: string,
-  read: boolean,
-  write: boolean,
-  configure: boolean
-): RabbitPermission {
-  return {
-    name: name,
-    rwc: [read, write, configure],
+    permission: {vhost: ['tracker']},
   };
 }
 
