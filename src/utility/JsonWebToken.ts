@@ -19,7 +19,7 @@ export function createJwtMobileAccessToken(
 ): JwtMobileAccessToken {
   return {
     trackerId: trackerId,
-    permission: {vhost: ['tracker']},
+    permission: {vhost: ['/']},
   };
 }
 
