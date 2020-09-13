@@ -42,3 +42,33 @@ Place environment variable in file '.env' or specify the location of that file w
 
 - `MOBILE_JWT_ISSUER_NAME`: the issuer (iss) field of mobile JWT
 - `MOBILE_JWT_ALGORITHM`: the algorithm for mobile JWT signing operation
+
+## Mobile JWT example
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0cmFja2VySWQiOiJnYXJ5cGFycm90IiwicGVybWlzc2lvbiI6eyJ2aG9zdCI6WyJ0cmFja2VyIl19LCJpYXQiOjE1OTk5Mzk3NjAsImV4cCI6MTU5OTkzOTg4MCwiYXVkIjoidHJhY2tlciIsImlzcyI6Ik1vYmlsZS1BdXRoIiwic3ViIjoiZ2FyeXBhcnJvdCIsImp0aSI6IjVjMjFjZDA5MTkwZTBmNTMifQ.yAJESOmHJLJpez1bF_PJysgY9C0xHZxlqV18ulzAsAQ
+```
+
+```
+{
+  "trackerId": "garyparrot",
+  "permission": {
+    "vhost": [
+      "tracker"
+    ]
+  },
+  "iat": 1599939760,
+  "exp": 1599939880,
+  "aud": "tracker",
+  "iss": "Mobile-Auth",
+  "sub": "garyparrot",
+  "jti": "5c21cd09190e0f53"
+}
+```
+
+- The issuer is specified by an environment variable, you should not expect it to be "Mobile-Auth"
+- The algorithm is specified by an environment variable, you should not expect it to be "HS256"
+
+## Roadmap
+
+1. Exchange the algorithm to RS256.
